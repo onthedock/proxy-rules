@@ -1,0 +1,4 @@
+tcp, www.ubuntu.com, 443, allow
+tcp, www.badsite.com, 80, deny
+http, spam.com, 345", block 
+http, p0rn.com, 6969, block 
