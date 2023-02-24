@@ -32,7 +32,7 @@ func Test_ValidateProtocol(t *testing.T) {
 	}
 }
 
-func Test_ValidateRule(t *testing.T) {
+func Test_IsValid(t *testing.T) {
 	rule := new(Rule)
 
 	rule.Action = "Allow"
@@ -40,7 +40,7 @@ func Test_ValidateRule(t *testing.T) {
 	rule.Protocol = "tcp"
 
 	want := true
-	got := rule.ValidateRule()
+	got := rule.IsValid()
 	if got != want {
 		t.Errorf("wanted '%t' but got '%t'", want, got)
 	}

@@ -27,6 +27,6 @@ func (rule *Rule) ValidateProtocol() bool {
 	return true
 }
 
-func (rule *Rule) ValidateRule() bool {
+func (rule *Rule) IsValid() bool {
 	return rule.ValidateAction() && rule.ValidatePort() && rule.ValidateProtocol()
 }
