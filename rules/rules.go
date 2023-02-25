@@ -55,21 +55,22 @@ var (
 )
 
 func (rule *Rule) IsValid() (bool, error) {
-	var err error = nil
+	var err error
+
 	if !rule.ValidateAction() {
-		err = errors.Join(err, fmt.Errorf("%w: %q", ErrInvalidAction, rule.Action))
+		err = errors.Join(err, fmt.Errorf("%v: %q", ErrInvalidAction, rule.Action))
 	}
 
 	if !rule.ValidatePort() {
-		err = errors.Join(fmt.Errorf("%w: %q", ErrInvalidPort, rule.Port))
+		err = errors.Join(err, fmt.Errorf("%v: %d", ErrInvalidPort, rule.Port))
 	}
 
 	if !rule.ValidateProtocol() {
-		err = errors.Join(fmt.Errorf("%w: %q", ErrInvalidProtocol, rule.Protocol))
+		err = errors.Join(err, fmt.Errorf("%v: %q", ErrInvalidProtocol, rule.Protocol))
 	}
 
 	if !rule.ValidateUrl() {
-		err = errors.Join(fmt.Errorf("%w: %q", ErrInvalidUrl, rule.Url))
+		err = errors.Join(err, fmt.Errorf("%v: %q", ErrInvalidUrl, rule.Url))
 	}
 
 	return rule.ValidateAction() && rule.ValidatePort() && rule.ValidateProtocol() && rule.ValidateUrl(), err
@@ -77,6 +78,7 @@ func (rule *Rule) IsValid() (bool, error) {
 
 func NewRule(fields []string) (*Rule, error) {
 	rule := new(Rule)
+
 	for range fields {
 		rule.Protocol = fields[0]
 		rule.Url = fields[1]

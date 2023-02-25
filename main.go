@@ -4,7 +4,6 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"flag"
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -27,7 +26,6 @@ func main() {
 
 	r := csv.NewReader(file)
 	proxyRules := make([]*rules.Rule, 0)
-
 	for {
 		line, err := r.Read()
 		if err == io.EOF {
@@ -41,12 +39,9 @@ func main() {
 			line[i] = strings.TrimSpace(line[i])
 		}
 
-		rule := new(rules.Rule)
-		var ruleErr error
-		rule, ruleErr = rules.NewRule(line)
-		fmt.Printf("%v\n", *rule)
+		rule, ruleErr := rules.NewRule(line)
 		if ruleErr != nil {
-			log.Printf("%v, %v", line, ruleErr)
+			log.Printf("error processing line %v.\n%v", line, ruleErr)
 			continue
 		}
 		proxyRules = append(proxyRules, rule)
