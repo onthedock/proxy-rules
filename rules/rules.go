@@ -8,10 +8,10 @@ import (
 )
 
 type Rule struct {
-	Action   string
-	Port     int
-	Protocol string
-	Url      string
+	Action   string `json:"action"`
+	Port     int    `json:"port"`
+	Protocol string `json:"protocol"`
+	Url      string `json:"url"`
 }
 
 func (rule *Rule) ValidatePort() bool {
