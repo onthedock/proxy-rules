@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"flag"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -14,12 +15,23 @@ import (
 func main() {
 	rulesFilename := flag.String("rules", "rules.csv", "path to the file containing the rules to process")
 	jsonFilename := flag.String("out", "rules.json", "path to the output JSON file containing the processed rules")
+	logFlag := flag.Bool("log", false, "if set, errors are saved to file (instead of stdout)")
+	logFilename := flag.String("logfile", "errors.log", "save errors to the specified file")
 	flag.Parse()
+
+	if *logFlag {
+		logfile, err := os.OpenFile(*logFilename, os.O_CREATE+os.O_WRONLY, 0644)
+		if err != nil {
+			fmt.Printf("unable to open logfile %q\n", *logFilename)
+			os.Exit(1)
+		}
+		log.SetOutput(logfile)
+	}
 
 	file, err := os.Open(*rulesFilename)
 
 	if err != nil {
-		log.Printf("Unable to open rules file %q", *rulesFilename)
+		log.Printf("Unable to open rules file %q\n", *rulesFilename)
 		os.Exit(1)
 	}
 	defer file.Close()
