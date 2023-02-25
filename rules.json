@@ -1,1 +1,0 @@
-[{"protocol":"tcp","fqdn":"www.ubuntu.com","port":"443","action":"allow"},{"protocol":"tcp","fqdn":"www.badsite.com","port":"80","action":"deny"}]
