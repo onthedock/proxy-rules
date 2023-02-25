@@ -73,13 +73,23 @@ func Test_ValidateProtocol(t *testing.T) {
 		assertValidation(t, got, want)
 	})
 
-	t.Run("only tcp or udp allowed", func(t *testing.T) {
+	t.Run("test tcp protocol", func(t *testing.T) {
 		rule := new(Rule)
 
 		rule.Protocol = "tcp"
 
 		got := rule.ValidateProtocol()
 		want := true
+		assertValidation(t, got, want)
+	})
+
+	t.Run("test udp protocol", func(t *testing.T) {
+		rule := new(Rule)
+
+		rule.Protocol = "http"
+
+		got := rule.ValidateProtocol()
+		want := false
 		assertValidation(t, got, want)
 	})
 }
