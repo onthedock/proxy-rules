@@ -43,5 +43,5 @@ func (rule *Rule) ValidateUrl() bool {
 }
 
 func (rule *Rule) IsValid() bool {
-	return rule.ValidateAction() && rule.ValidatePort() && rule.ValidateProtocol()
+	return rule.ValidateAction() && rule.ValidatePort() && rule.ValidateProtocol() && rule.ValidateUrl()
 }
