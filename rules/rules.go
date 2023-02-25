@@ -1,9 +1,10 @@
 package rules
 
 type Rule struct {
-	Port     int
 	Action   string
+	Port     int
 	Protocol string
+	URL      string
 }
 
 func (rule *Rule) ValidatePort() bool {
@@ -25,6 +26,10 @@ func (rule *Rule) ValidateProtocol() bool {
 		return false
 	}
 	return true
+}
+
+func (rule *Rule) ValidateUrl() bool {
+	return rule.URL != ""
 }
 
 func (rule *Rule) IsValid() bool {

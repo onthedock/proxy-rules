@@ -74,6 +74,16 @@ func Test_ValidateProtocol(t *testing.T) {
 	})
 }
 
+func Test_ValidateUrl(t *testing.T) {
+	t.Run("empty not allowed", func(t *testing.T) {
+		rule := new(Rule)
+
+		got := rule.ValidateUrl()
+		want := false
+		assertValidation(t, got, want)
+	})
+}
+
 func Test_IsValid(t *testing.T) {
 	rule := new(Rule)
 
