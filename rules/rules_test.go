@@ -4,32 +4,32 @@ import "testing"
 
 func Test_ValidateAction(t *testing.T) {
 	rule := new(Rule)
+
 	rule.Action = "Allow"
-	want := true
+
 	got := rule.ValidateAction()
-	if got != want {
-		t.Errorf("wanted '%t' but got '%t'", want, got)
-	}
+	want := true
+	assertValidation(t, got, want)
 }
 
 func Test_ValidatePort(t *testing.T) {
 	rule := new(Rule)
+
 	rule.Port = 2
-	want := true
+
 	got := rule.ValidatePort()
-	if got != want {
-		t.Errorf("wanted '%t' but got '%t'", want, got)
-	}
+	want := true
+	assertValidation(t, got, want)
 }
 
 func Test_ValidateProtocol(t *testing.T) {
 	rule := new(Rule)
+
 	rule.Protocol = "tcp"
-	want := true
+
 	got := rule.ValidateProtocol()
-	if got != want {
-		t.Errorf("wanted '%t' but got '%t'", want, got)
-	}
+	want := true
+	assertValidation(t, got, want)
 }
 
 func Test_IsValid(t *testing.T) {
@@ -39,9 +39,15 @@ func Test_IsValid(t *testing.T) {
 	rule.Port = 8080
 	rule.Protocol = "tcp"
 
-	want := true
 	got := rule.IsValid()
+	want := true
+	assertValidation(t, got, want)
+}
+
+func assertValidation(t testing.TB, got, want bool) {
+	t.Helper()
+
 	if got != want {
-		t.Errorf("wanted '%t' but got '%t'", want, got)
+		t.Errorf("got '%t' but wanted '%t'", got, want)
 	}
 }
