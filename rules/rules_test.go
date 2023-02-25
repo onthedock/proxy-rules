@@ -92,6 +92,19 @@ func Test_ValidateUrl(t *testing.T) {
 		want := false
 		assertValidation(t, got, want)
 	})
+
+	t.Run("regex for RFC 123 fqdn", func(t *testing.T) {
+		for _, url := range []string{"ubuntu.com", "packages.ubuntu.com", "www.google.com", "vm01.compute.aws.com"} {
+			rule := new(Rule)
+			rule.Url = url
+
+			got := rule.ValidateUrl()
+			want := true
+			assertValidation(t, got, want)
+		}
+
+	})
+
 }
 
 func Test_IsValid(t *testing.T) {

@@ -1,5 +1,7 @@
 package rules
 
+import "regexp"
+
 type Rule struct {
 	Action   string
 	Port     int
@@ -29,7 +31,15 @@ func (rule *Rule) ValidateProtocol() bool {
 }
 
 func (rule *Rule) ValidateUrl() bool {
-	return rule.Url != ""
+	// Go uses Perl regex https://www.perlmonks.org/?node_id=1029403
+	r, err := regexp.Compile(`^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9]+)\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])`)
+	if err != nil {
+		return false
+	}
+	if r.MatchString(rule.Url) {
+		return true
+	}
+	return false
 }
 
 func (rule *Rule) IsValid() bool {
