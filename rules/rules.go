@@ -4,7 +4,7 @@ type Rule struct {
 	Action   string
 	Port     int
 	Protocol string
-	URL      string
+	Url      string
 }
 
 func (rule *Rule) ValidatePort() bool {
@@ -29,7 +29,7 @@ func (rule *Rule) ValidateProtocol() bool {
 }
 
 func (rule *Rule) ValidateUrl() bool {
-	return rule.URL != ""
+	return rule.Url != ""
 }
 
 func (rule *Rule) IsValid() bool {
