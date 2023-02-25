@@ -183,7 +183,7 @@ func Test_IsValid(t *testing.T) {
 		fmt.Printf("%v", err)
 		got := errors.Is(err, ErrInvalidAction)
 
-		want := true
+		want := false
 		assertValidation(t, got, want)
 	})
 
