@@ -13,10 +13,20 @@ func Test_ValidateAction(t *testing.T) {
 		assertValidation(t, got, want)
 	})
 
-	t.Run("only 'Allow' or 'Deny'", func(t *testing.T) {
+	t.Run("test 'allow'", func(t *testing.T) {
 		rule := new(Rule)
 
-		rule.Action = "Allow"
+		rule.Action = "allow"
+
+		got := rule.ValidateAction()
+		want := true
+		assertValidation(t, got, want)
+	})
+
+	t.Run("test 'deny'", func(t *testing.T) {
+		rule := new(Rule)
+
+		rule.Action = "deny"
 
 		got := rule.ValidateAction()
 		want := true
@@ -87,7 +97,7 @@ func Test_ValidateUrl(t *testing.T) {
 func Test_IsValid(t *testing.T) {
 	rule := new(Rule)
 
-	rule.Action = "Allow"
+	rule.Action = "allow"
 	rule.Port = 8080
 	rule.Protocol = "tcp"
 

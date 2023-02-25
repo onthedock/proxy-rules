@@ -15,7 +15,7 @@ func (rule *Rule) ValidatePort() bool {
 }
 
 func (rule *Rule) ValidateAction() bool {
-	if rule.Action != "Allow" && rule.Action != "Deny" {
+	if rule.Action != "allow" && rule.Action != "deny" {
 		return false
 	}
 	return true
