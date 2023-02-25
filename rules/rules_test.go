@@ -108,15 +108,71 @@ func Test_ValidateUrl(t *testing.T) {
 }
 
 func Test_IsValid(t *testing.T) {
+	t.Run("one missing field - test is invalid rule", func(t *testing.T) {
+		rule := new(Rule)
+
+		rule.Port = 8080
+		rule.Protocol = "tcp"
+		rule.Url = "ubuntu.com"
+
+		got, _ := rule.IsValid()
+		want := false
+		assertValidation(t, got, want)
+	})
+
+	t.Run("multiple missing fields - test is invalid rule", func(t *testing.T) {
+		rule := new(Rule)
+
+		rule.Protocol = "tcp"
+		rule.Url = "ubuntu.com"
+
+		got, _ := rule.IsValid()
+		want := false
+		assertValidation(t, got, want)
+	})
+
+	t.Run("one invalid field - test is invalid rule", func(t *testing.T) {
+		rule := new(Rule)
+
+		rule.Action = "tcp"
+		rule.Port = 8080
+		rule.Protocol = "tcp"
+		rule.Url = "*.ubuntu.com"
+
+		got, _ := rule.IsValid()
+		want := false
+		assertValidation(t, got, want)
+	})
+
+	t.Run("multiple invalid fields - test is invalid rule", func(t *testing.T) {
+		rule := new(Rule)
+
+		rule.Action = "pass"
+		rule.Port = 8080
+		rule.Protocol = "tcp"
+		rule.Url = "*.ubuntu.com"
+
+		got, _ := rule.IsValid()
+		want := false
+		assertValidation(t, got, want)
+	})
+
+	t.Run("one invalid fields - test error", func(t *testing.T) {
 	rule := new(Rule)
 
-	rule.Action = "allow"
+		rule.Action = "pass"
 	rule.Port = 8080
 	rule.Protocol = "tcp"
+		rule.Url = "ubuntu.com"
 
-	got := rule.IsValid()
+		_, err := rule.IsValid()
+		fmt.Printf("%v", err)
+		got := errors.Is(err, ErrInvalidAction)
+
 	want := true
 	assertValidation(t, got, want)
+	})
+
 }
 
 func assertValidation(t testing.TB, got, want bool) {
