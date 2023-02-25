@@ -74,4 +74,25 @@ func (rule *Rule) IsValid() (bool, error) {
 
 	return rule.ValidateAction() && rule.ValidatePort() && rule.ValidateProtocol() && rule.ValidateUrl(), err
 }
+
+func NewRule(fields []string) (*Rule, error) {
+	rule := new(Rule)
+	for range fields {
+		rule.Protocol = fields[0]
+		rule.Url = fields[1]
+
+		p, err := strconv.Atoi(fields[2])
+		if err != nil {
+			return rule, err
+		}
+		rule.Port = p
+
+		rule.Action = fields[3]
+	}
+
+	ok, err := rule.IsValid()
+	if !ok {
+		return new(Rule), err
+	}
+	return rule, nil
 }
