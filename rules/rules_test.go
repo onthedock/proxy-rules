@@ -208,32 +208,23 @@ func Test_IsValid(t *testing.T) {
 func Test_NewRule(t *testing.T) {
 	t.Run("rule is ok", func(t *testing.T) {
 		fields := []string{"tcp", "ubuntu.com", "443", "allow"}
-		var rule = new(Rule)
-		var err error
 		var got bool = true
-		rule, err = NewRule(fields)
+
+		_, err := NewRule(fields)
 		if err != nil {
 			got = false
 		}
-		ok, _ := rule.IsValid()
-		if !ok {
-			got = false
-		}
+
 		want := true
 		assertValidation(t, got, want)
 	})
 
 	t.Run("rule is not ok", func(t *testing.T) {
 		fields := []string{"http", "ubuntu.com", "443", "allow"}
-		var rule = new(Rule)
-		var err error
+
 		var got bool = true
-		rule, err = NewRule(fields)
+		_, err := NewRule(fields)
 		if err != nil {
-			got = false
-		}
-		ok, _ := rule.IsValid()
-		if !ok {
 			got = false
 		}
 		want := false
