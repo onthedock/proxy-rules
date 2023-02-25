@@ -20,7 +20,7 @@ func main() {
 	flag.Parse()
 
 	if *logFlag {
-		logfile, err := os.OpenFile(*logFilename, os.O_CREATE+os.O_WRONLY, 0644)
+		logfile, err := os.OpenFile(*logFilename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 		if err != nil {
 			fmt.Printf("unable to open logfile %q\n", *logFilename)
 			os.Exit(1)
