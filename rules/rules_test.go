@@ -55,13 +55,23 @@ func Test_ValidatePort(t *testing.T) {
 }
 
 func Test_ValidateProtocol(t *testing.T) {
-	rule := new(Rule)
+	t.Run("empty is not allowed", func(t *testing.T) {
+		rule := new(Rule)
 
-	rule.Protocol = "tcp"
+		got := rule.ValidateProtocol()
+		want := false
+		assertValidation(t, got, want)
+	})
 
-	got := rule.ValidateProtocol()
-	want := true
-	assertValidation(t, got, want)
+	t.Run("only tcp or udp allowed", func(t *testing.T) {
+		rule := new(Rule)
+
+		rule.Protocol = "tcp"
+
+		got := rule.ValidateProtocol()
+		want := true
+		assertValidation(t, got, want)
+	})
 }
 
 func Test_IsValid(t *testing.T) {
