@@ -3,13 +3,25 @@ package rules
 import "testing"
 
 func Test_ValidateAction(t *testing.T) {
-	rule := new(Rule)
+	t.Run("empty is not allowed", func(t *testing.T) {
+		rule := new(Rule)
 
-	rule.Action = "Allow"
+		rule.Action = ""
 
-	got := rule.ValidateAction()
-	want := true
-	assertValidation(t, got, want)
+		got := rule.ValidateAction()
+		want := false
+		assertValidation(t, got, want)
+	})
+
+	t.Run("only 'Allow' or 'Deny'", func(t *testing.T) {
+		rule := new(Rule)
+
+		rule.Action = "Allow"
+
+		got := rule.ValidateAction()
+		want := true
+		assertValidation(t, got, want)
+	})
 }
 
 func Test_ValidatePort(t *testing.T) {
