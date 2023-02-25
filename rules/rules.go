@@ -1,6 +1,11 @@
 package rules
 
-import "regexp"
+import (
+	"errors"
+	"fmt"
+	"regexp"
+	"strconv"
+)
 
 type Rule struct {
 	Action   string

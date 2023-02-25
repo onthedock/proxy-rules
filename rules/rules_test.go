@@ -1,6 +1,10 @@
 package rules
 
-import "testing"
+import (
+	"errors"
+	"fmt"
+	"testing"
+)
 
 func Test_ValidateAction(t *testing.T) {
 	t.Run("empty is not allowed", func(t *testing.T) {
@@ -183,6 +187,23 @@ func Test_IsValid(t *testing.T) {
 	assertValidation(t, got, want)
 	})
 
+	t.Run("multiple invalid fields - test errors", func(t *testing.T) {
+		rule := new(Rule)
+
+		rule.Action = "pass"
+		rule.Port = 8080
+		rule.Protocol = "tcp"
+		rule.Url = "*.ubuntu.com"
+
+		got, err := rule.IsValid()
+		if err != nil {
+			got = false
+		}
+
+		want := false
+		assertValidation(t, got, want)
+	})
+}
 }
 
 func assertValidation(t testing.TB, got, want bool) {
