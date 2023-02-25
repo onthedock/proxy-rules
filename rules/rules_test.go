@@ -25,13 +25,33 @@ func Test_ValidateAction(t *testing.T) {
 }
 
 func Test_ValidatePort(t *testing.T) {
-	rule := new(Rule)
+	t.Run("empty (defaults to 0) is not allowed", func(t *testing.T) {
+		rule := new(Rule)
 
-	rule.Port = 2
+		got := rule.ValidatePort()
+		want := false
+		assertValidation(t, got, want)
+	})
 
-	got := rule.ValidatePort()
-	want := true
-	assertValidation(t, got, want)
+	t.Run("negative port numbers not allowed", func(t *testing.T) {
+		rule := new(Rule)
+
+		rule.Port = -15
+
+		got := rule.ValidatePort()
+		want := false
+		assertValidation(t, got, want)
+	})
+
+	t.Run("port over 65535 not allowed", func(t *testing.T) {
+		rule := new(Rule)
+
+		rule.Port = 78901
+
+		got := rule.ValidatePort()
+		want := false
+		assertValidation(t, got, want)
+	})
 }
 
 func Test_ValidateProtocol(t *testing.T) {
