@@ -44,7 +44,7 @@ func main() {
 			break
 		}
 		if err != nil {
-			log.Printf("error processing line %s: CSV %s. Ignoring line.\n", line, err.Error())
+			log.Printf("error processing line %s:\nCSV %s. Ignoring line.\n", line, err.Error())
 			continue
 		}
 		for i := range line {
